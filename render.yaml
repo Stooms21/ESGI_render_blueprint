@@ -1,21 +1,22 @@
 services:
-    type: web
-    name: cloud_blueprint
-    runtime: node
-    repo: https://github.com/Stooms21/ESGI_render_blueprint
-    region: frankfurt # optional (defaults to oregon)
-    plan: free # optional (defaults to starter instance type)
-    branch: main # optional (defaults to master)
-    buildCommand: npm install
-    startCommand: npm run start
-    envVars:
-    	key: DATABASE_URL
-    	fromDatabase:
-            name: cloud-db
-            property: connectionString
-
-database:
-    name: cloud-db
+  - type: web
+    name: cloud-web
     region: frankfurt
-    
-	
+    plan: free
+    runtime: node
+    repo: https://github.com/ArchOrn/render-deploy-bp.git
+    branch: master
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cloud-db
+          property: connectionString
+
+databases:
+  - name: cloud-db
+    region: frankfurt
+    plan: free
+    databaseName: cloud
+    user: cloud
